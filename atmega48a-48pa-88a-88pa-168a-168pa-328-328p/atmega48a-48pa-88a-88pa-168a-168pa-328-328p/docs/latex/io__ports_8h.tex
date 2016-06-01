@@ -1,0 +1,219 @@
+\section{C\+:/\+Users/\+Steven/\+Documents/\+Atmel Studio/7.0/atmega48a-\/48pa-\/88a-\/88pa-\/168a-\/168pa-\/328-\/328p/atmega48a-\/48pa-\/88a-\/88pa-\/168a-\/168pa-\/328-\/328p/lib/sys/io\+\_\+ports.h File Reference}
+\label{io__ports_8h}\index{C\+:/\+Users/\+Steven/\+Documents/\+Atmel Studio/7.\+0/atmega48a-\/48pa-\/88a-\/88pa-\/168a-\/168pa-\/328-\/328p/atmega48a-\/48pa-\/88a-\/88pa-\/168a-\/168pa-\/328-\/328p/lib/sys/io\+\_\+ports.\+h@{C\+:/\+Users/\+Steven/\+Documents/\+Atmel Studio/7.\+0/atmega48a-\/48pa-\/88a-\/88pa-\/168a-\/168pa-\/328-\/328p/atmega48a-\/48pa-\/88a-\/88pa-\/168a-\/168pa-\/328-\/328p/lib/sys/io\+\_\+ports.\+h}}
+
+
+Functions for manipulating I/\+O-\/ports.  
+
+
+{\ttfamily \#include \char`\"{}system.\+h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct {\bf io\+Init\+Structure\+\_\+t}
+\begin{DoxyCompactList}\small\item\em I/O initialization structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef uint8\+\_\+t {\bf io\+Pin\+\_\+t}\label{io__ports_8h_a9d2ac58924e4de9d78332952b7d5de5a}
+
+\begin{DoxyCompactList}\small\item\em I/\+O-\/pin data type. \end{DoxyCompactList}\item 
+typedef uint8\+\_\+t {\bf io\+Mode\+\_\+t}\label{io__ports_8h_ad7fa28ba0409fdbd18ea7743399943e7}
+
+\begin{DoxyCompactList}\small\item\em I/\+O-\/mode data type. \end{DoxyCompactList}\item 
+typedef volatile uint8\+\_\+t {\bf io\+Register\+\_\+t}\label{io__ports_8h_a5917e31f6b72d7c4dda26132d0e51501}
+
+\begin{DoxyCompactList}\small\item\em I/\+O-\/register data type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \\*
+{\bfseries I\+O\+\_\+\+P\+I\+N\+\_\+0} = (io\+Pin\+\_\+t) 0x01, 
+{\bfseries I\+O\+\_\+\+P\+I\+N\+\_\+1} = (io\+Pin\+\_\+t) 0x02, 
+{\bfseries I\+O\+\_\+\+P\+I\+N\+\_\+2} = (io\+Pin\+\_\+t) 0x04, 
+{\bfseries I\+O\+\_\+\+P\+I\+N\+\_\+3} = (io\+Pin\+\_\+t) 0x08, 
+\\*
+{\bfseries I\+O\+\_\+\+P\+I\+N\+\_\+4} = (io\+Pin\+\_\+t) 0x10, 
+{\bfseries I\+O\+\_\+\+P\+I\+N\+\_\+5} = (io\+Pin\+\_\+t) 0x20, 
+{\bfseries I\+O\+\_\+\+P\+I\+N\+\_\+6} = (io\+Pin\+\_\+t) 0x40, 
+{\bfseries I\+O\+\_\+\+P\+I\+N\+\_\+7} = (io\+Pin\+\_\+t) 0x80
+ \}\label{io__ports_8h_a06fc87d81c62e9abb8790b6e5713c55b}
+\begin{DoxyCompactList}\small\item\em I/\+O-\/port pins. \end{DoxyCompactList}
+\item 
+enum \{ {\bfseries I\+O\+\_\+\+M\+O\+D\+E\+\_\+\+I\+N\+P\+UT} = (io\+Mode\+\_\+t) 0x00, 
+{\bfseries I\+O\+\_\+\+M\+O\+D\+E\+\_\+\+O\+U\+T\+P\+UT} = (io\+Mode\+\_\+t) 0x01, 
+{\bfseries I\+O\+\_\+\+M\+O\+D\+E\+\_\+\+H\+I\+\_\+Z} = (io\+Mode\+\_\+t) 0x02
+ \}\label{io__ports_8h_adf764cbdea00d65edcd07bb9953ad2b7}
+\begin{DoxyCompactList}\small\item\em I/\+O-\/pin modes. \end{DoxyCompactList}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void {\bf I\+O\+\_\+init} ({\bf io\+Init\+Structure\+\_\+t} $\ast$io\+Init\+Structure)
+\begin{DoxyCompactList}\small\item\em I/\+O-\/ports initialization. \end{DoxyCompactList}\item 
+void {\bf I\+O\+\_\+set\+Bit} ({\bf io\+Register\+\_\+t} $\ast$port, {\bf io\+Pin\+\_\+t} pin)
+\begin{DoxyCompactList}\small\item\em Set I/\+O-\/pin high. \end{DoxyCompactList}\item 
+void {\bf I\+O\+\_\+reset\+Bit} ({\bf io\+Register\+\_\+t} $\ast$port, {\bf io\+Pin\+\_\+t} pin)
+\begin{DoxyCompactList}\small\item\em Set I/\+O-\/pin low. \end{DoxyCompactList}\item 
+void {\bf I\+O\+\_\+toggle\+Bit} ({\bf io\+Register\+\_\+t} $\ast$port, {\bf io\+Pin\+\_\+t} pin)
+\begin{DoxyCompactList}\small\item\em Toggle I/\+O-\/pin. \end{DoxyCompactList}\item 
+{\bf bool\+\_\+t} {\bf I\+O\+\_\+read\+Bit} ({\bf io\+Register\+\_\+t} $\ast$port, {\bf io\+Pin\+\_\+t} pin)
+\begin{DoxyCompactList}\small\item\em Read I/\+O-\/pin. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Functions for manipulating I/\+O-\/ports. 
+
+\begin{DoxyAuthor}{Author}
+Steven Hulshof
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+31-\/05-\/2016
+\end{DoxyDate}
+This file contains functions to manipulate the I/\+O-\/ports of the A\+Tmega. Configure the I/\+O-\/ports with the io\+Init\+Structure to set I/\+O-\/port usage. I/\+O-\/pins can be set, reset, toggled and read.
+
+
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <util/delay.h>}
+\textcolor{preprocessor}{#include "lib/sys/io_ports.h"}
+
+\textcolor{comment}{// Led ouput on PORTC}
+\textcolor{keyword}{const} ioPin_t ledR = IO\_PIN\_3;
+\textcolor{keyword}{const} ioPin_t ledG = IO\_PIN\_4;
+
+\textcolor{comment}{// Button input on PORTB}
+\textcolor{keyword}{const} ioPin_t button = IO\_PIN\_4;
+
+\textcolor{keywordtype}{int} main(\textcolor{keywordtype}{void}) \{
+
+ ioInitStructure_t output = \{
+    .pin    = ledR | ledG,
+    .port   = &PORTC, 
+    .mode   = IO\_MODE\_OUTPUT
+ \}; IO_init(&leds);
+
+ ioInitStructure_t input = \{
+    .pin    = button,
+    .port   = &PORTB,
+    .mode   = IO\_MODE\_INPUT
+ \}; IO_init(&button);
+
+ \textcolor{keywordflow}{while}(TRUE) \{
+     
+    \textcolor{keywordflow}{if}(IO_readBit(&input.port, button) == TRUE) \{
+        IO_resetBit(&leds.port, ledR);
+        IO_setBit(&leds.port, ledG);
+    \} \textcolor{keywordflow}{else} \{
+        IO_setBit(&leds.port, ledR);
+        IO_resetBit(&leds.port, ledG);
+    \}
+ \}
+\}    
+\end{DoxyCode}
+ 
+
+\subsection{Function Documentation}
+\index{io\+\_\+ports.\+h@{io\+\_\+ports.\+h}!I\+O\+\_\+init@{I\+O\+\_\+init}}
+\index{I\+O\+\_\+init@{I\+O\+\_\+init}!io\+\_\+ports.\+h@{io\+\_\+ports.\+h}}
+\subsubsection[{I\+O\+\_\+init(io\+Init\+Structure\+\_\+t $\ast$io\+Init\+Structure)}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf io\+Init\+Structure\+\_\+t} $\ast$}]{io\+Init\+Structure}
+\end{DoxyParamCaption}
+)}\label{io__ports_8h_a5e493e0a2b31b012320cdee7da9e5534}
+
+
+I/\+O-\/ports initialization. 
+
+Initializes D\+DR, P\+IN and P\+O\+RT registers to the specified configuration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em io\+Init\+Structure} & Pointer to I/\+O-\/ports initialization structure. \\
+\hline
+\end{DoxyParams}
+\index{io\+\_\+ports.\+h@{io\+\_\+ports.\+h}!I\+O\+\_\+read\+Bit@{I\+O\+\_\+read\+Bit}}
+\index{I\+O\+\_\+read\+Bit@{I\+O\+\_\+read\+Bit}!io\+\_\+ports.\+h@{io\+\_\+ports.\+h}}
+\subsubsection[{I\+O\+\_\+read\+Bit(io\+Register\+\_\+t $\ast$port, io\+Pin\+\_\+t pin)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool\+\_\+t} I\+O\+\_\+read\+Bit (
+\begin{DoxyParamCaption}
+\item[{{\bf io\+Register\+\_\+t} $\ast$}]{port, }
+\item[{{\bf io\+Pin\+\_\+t}}]{pin}
+\end{DoxyParamCaption}
+)}\label{io__ports_8h_a0f68b2fb17b12f7bf110dc056fe8a446}
+
+
+Read I/\+O-\/pin. 
+
+Read pin register. Resulting in a pin read out. Returns 1 or 0.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & I/\+O-\/port register. \\
+\hline
+{\em pin} & I/\+O-\/pin number.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+State of the I/\+O-\/pin. 
+\end{DoxyReturn}
+\index{io\+\_\+ports.\+h@{io\+\_\+ports.\+h}!I\+O\+\_\+reset\+Bit@{I\+O\+\_\+reset\+Bit}}
+\index{I\+O\+\_\+reset\+Bit@{I\+O\+\_\+reset\+Bit}!io\+\_\+ports.\+h@{io\+\_\+ports.\+h}}
+\subsubsection[{I\+O\+\_\+reset\+Bit(io\+Register\+\_\+t $\ast$port, io\+Pin\+\_\+t pin)}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+\_\+reset\+Bit (
+\begin{DoxyParamCaption}
+\item[{{\bf io\+Register\+\_\+t} $\ast$}]{port, }
+\item[{{\bf io\+Pin\+\_\+t}}]{pin}
+\end{DoxyParamCaption}
+)}\label{io__ports_8h_a35f7697c2102d1d26e86abf9ca60f9e2}
+
+
+Set I/\+O-\/pin low. 
+
+Set pin bit in port register to 0. Resulting in a 0 on the I/\+O-\/pin.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & I/\+O-\/port register. \\
+\hline
+{\em pin} & I/\+O-\/pin number. \\
+\hline
+\end{DoxyParams}
+\index{io\+\_\+ports.\+h@{io\+\_\+ports.\+h}!I\+O\+\_\+set\+Bit@{I\+O\+\_\+set\+Bit}}
+\index{I\+O\+\_\+set\+Bit@{I\+O\+\_\+set\+Bit}!io\+\_\+ports.\+h@{io\+\_\+ports.\+h}}
+\subsubsection[{I\+O\+\_\+set\+Bit(io\+Register\+\_\+t $\ast$port, io\+Pin\+\_\+t pin)}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+\_\+set\+Bit (
+\begin{DoxyParamCaption}
+\item[{{\bf io\+Register\+\_\+t} $\ast$}]{port, }
+\item[{{\bf io\+Pin\+\_\+t}}]{pin}
+\end{DoxyParamCaption}
+)}\label{io__ports_8h_ac5e6993a37e6869fe18541fd01f36810}
+
+
+Set I/\+O-\/pin high. 
+
+Set pin bit in port register to 1. Resulting in a 1 on the I/\+O-\/pin.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & I/\+O-\/port register. \\
+\hline
+{\em pin} & I/\+O-\/pin number. \\
+\hline
+\end{DoxyParams}
+\index{io\+\_\+ports.\+h@{io\+\_\+ports.\+h}!I\+O\+\_\+toggle\+Bit@{I\+O\+\_\+toggle\+Bit}}
+\index{I\+O\+\_\+toggle\+Bit@{I\+O\+\_\+toggle\+Bit}!io\+\_\+ports.\+h@{io\+\_\+ports.\+h}}
+\subsubsection[{I\+O\+\_\+toggle\+Bit(io\+Register\+\_\+t $\ast$port, io\+Pin\+\_\+t pin)}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+\_\+toggle\+Bit (
+\begin{DoxyParamCaption}
+\item[{{\bf io\+Register\+\_\+t} $\ast$}]{port, }
+\item[{{\bf io\+Pin\+\_\+t}}]{pin}
+\end{DoxyParamCaption}
+)}\label{io__ports_8h_a09d9d0863b3a71151d4179669e3f1ad8}
+
+
+Toggle I/\+O-\/pin. 
+
+Write 1 to pin register. Resulting in a toggle on the I/\+O-\/pin.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & I/\+O-\/port register. \\
+\hline
+{\em pin} & I/\+O-\/pin number. \\
+\hline
+\end{DoxyParams}
