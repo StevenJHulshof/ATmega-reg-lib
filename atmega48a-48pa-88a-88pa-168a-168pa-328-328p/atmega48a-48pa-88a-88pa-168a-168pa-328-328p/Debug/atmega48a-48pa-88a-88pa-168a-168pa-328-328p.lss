@@ -3,29 +3,29 @@ atmega48a-48pa-88a-88pa-168a-168pa-328-328p.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  0000017a  2**0
+  0 .data         00000000  00800100  00800100  000001ca  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000126  00000000  00000000  00000054  2**1
+  1 .text         00000176  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  0000017a  2**0
+  2 .comment      00000030  00000000  00000000  000001ca  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001ac  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000001fc  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000060  00000000  00000000  000001ec  2**0
+  4 .debug_aranges 00000080  00000000  00000000  0000023c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000004e8  00000000  00000000  0000024c  2**0
+  5 .debug_info   00000785  00000000  00000000  000002bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000002b4  00000000  00000000  00000734  2**0
+  6 .debug_abbrev 000002cf  00000000  00000000  00000a41  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000024b  00000000  00000000  000009e8  2**0
+  7 .debug_line   000002bb  00000000  00000000  00000d10  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000000a4  00000000  00000000  00000c34  2**2
+  8 .debug_frame  000000c8  00000000  00000000  00000fcc  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000301  00000000  00000000  00000cd8  2**0
+  9 .debug_str    000005f1  00000000  00000000  00001094  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000022f  00000000  00000000  00000fd9  2**0
+ 10 .debug_loc    00000256  00000000  00000000  00001685  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000040  00000000  00000000  00001208  2**0
+ 11 .debug_ranges 00000050  00000000  00000000  000018db  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -65,8 +65,8 @@ Disassembly of section .text:
   6e:	d8 e0       	ldi	r29, 0x08	; 8
   70:	de bf       	out	0x3e, r29	; 62
   72:	cd bf       	out	0x3d, r28	; 61
-  74:	0e 94 70 00 	call	0xe0	; 0xe0 <main>
-  78:	0c 94 91 00 	jmp	0x122	; 0x122 <_exit>
+  74:	0e 94 92 00 	call	0x124	; 0x124 <main>
+  78:	0c 94 b9 00 	jmp	0x172	; 0x172 <_exit>
 
 0000007c <__bad_interrupt>:
   7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -77,11 +77,11 @@ Disassembly of section .text:
 /**************************************************************************************
  * FUNCTION
  *************************************************************************************/
-void IO_init(ioInitStructure_t *ioInitStructure) {
+void IO_init(io_initStructure_t *ioInitStructure) {
   80:	fc 01       	movw	r30, r24
 	
 	// Locate DDR register.
-	ioRegister8_t *DDR = ioInitStructure->PORT-1;
+	register8_t *DDR = ioInitStructure->PORT-1;
   82:	32 81       	ldd	r19, Z+2	; 0x02
   84:	23 81       	ldd	r18, Z+3	; 0x03
 		
@@ -107,7 +107,7 @@ void IO_init(ioInitStructure_t *ioInitStructure) {
 	if(ioInitStructure->mode == IO_MODE_HI_Z)
   a2:	81 81       	ldd	r24, Z+1	; 0x01
   a4:	82 30       	cpi	r24, 0x02	; 2
-  a6:	a9 f0       	breq	.+42     	; 0xd2 <IO_init+0x52>
+  a6:	b1 f0       	breq	.+44     	; 0xd4 <IO_init+0x54>
 		return;
 		
 	// Set pin mode.
@@ -124,96 +124,154 @@ void IO_init(ioInitStructure_t *ioInitStructure) {
 	*ioInitStructure->PORT |=	ioInitStructure->pin * 
   ba:	a2 81       	ldd	r26, Z+2	; 0x02
   bc:	b3 81       	ldd	r27, Z+3	; 0x03
-  be:	2c 91       	ld	r18, X
+  be:	9c 91       	ld	r25, X
 								((~ioInitStructure->mode) & 0x01);
-  c0:	91 81       	ldd	r25, Z+1	; 0x01
-  c2:	90 95       	com	r25
-  c4:	91 70       	andi	r25, 0x01	; 1
+  c0:	21 81       	ldd	r18, Z+1	; 0x01
+  c2:	81 e0       	ldi	r24, 0x01	; 1
+  c4:	20 fd       	sbrc	r18, 0
+  c6:	80 e0       	ldi	r24, 0x00	; 0
 	if(ioInitStructure->mode == IO_MODE_HI_Z)
 		return;
 		
 	// Set pin mode.
 	*DDR |= ioInitStructure->pin * ioInitStructure->mode;
 	*ioInitStructure->PORT |=	ioInitStructure->pin * 
-  c6:	80 81       	ld	r24, Z
-  c8:	98 9f       	mul	r25, r24
-  ca:	80 2d       	mov	r24, r0
-  cc:	11 24       	eor	r1, r1
-  ce:	82 2b       	or	r24, r18
-  d0:	8c 93       	st	X, r24
-  d2:	08 95       	ret
+  c8:	20 81       	ld	r18, Z
+  ca:	82 9f       	mul	r24, r18
+  cc:	80 2d       	mov	r24, r0
+  ce:	11 24       	eor	r1, r1
+  d0:	89 2b       	or	r24, r25
+  d2:	8c 93       	st	X, r24
+  d4:	08 95       	ret
 
-000000d4 <IO_toggleBit>:
+000000d6 <TIM0_init>:
+#include "tim_0_8_pwm.h"
+
+/**************************************************************************************
+ * FUNCTION
+ *************************************************************************************/
+void TIM0_init(tim0_initStructure_t *tim0InitStructure) {
+  d6:	fc 01       	movw	r30, r24
 	
-	// Locate PIN register.
-	ioRegister8_t *PIN = PORT-2;
-	
-	// Toggle bit.
-	*PIN |= pin;
-  d4:	fc 01       	movw	r30, r24
-  d6:	32 97       	sbiw	r30, 0x02	; 2
-  d8:	80 81       	ld	r24, Z
-  da:	68 2b       	or	r22, r24
-  dc:	60 83       	st	Z, r22
-  de:	08 95       	ret
+	// Reset timer registers
+	TCCR0A = 0x00;
+  d8:	14 bc       	out	0x24, r1	; 36
+	TCCR0B = 0x00;
+  da:	15 bc       	out	0x25, r1	; 37
+		
+	// Set compare output mode
+	TCCR0A |= (tim0InitStructure->compareOutputModeA << COM0A0);
+  dc:	24 b5       	in	r18, 0x24	; 36
+  de:	91 81       	ldd	r25, Z+1	; 0x01
+  e0:	30 e4       	ldi	r19, 0x40	; 64
+  e2:	93 9f       	mul	r25, r19
+  e4:	c0 01       	movw	r24, r0
+  e6:	11 24       	eor	r1, r1
+  e8:	82 2b       	or	r24, r18
+  ea:	84 bd       	out	0x24, r24	; 36
+	TCCR0A |= (tim0InitStructure->compareOutputModeB << COM0B0);
+  ec:	24 b5       	in	r18, 0x24	; 36
+  ee:	92 81       	ldd	r25, Z+2	; 0x02
+  f0:	30 e1       	ldi	r19, 0x10	; 16
+  f2:	93 9f       	mul	r25, r19
+  f4:	c0 01       	movw	r24, r0
+  f6:	11 24       	eor	r1, r1
+  f8:	82 2b       	or	r24, r18
+  fa:	84 bd       	out	0x24, r24	; 36
+		
+	// Set waveform generation mode
+	TCCR0A |= (tim0InitStructure->waveformMode & 0x03);
+  fc:	94 b5       	in	r25, 0x24	; 36
+  fe:	80 81       	ld	r24, Z
+ 100:	83 70       	andi	r24, 0x03	; 3
+ 102:	89 2b       	or	r24, r25
+ 104:	84 bd       	out	0x24, r24	; 36
+	TCCR0B |= ((tim0InitStructure->waveformMode & 0x04) << 1);
+ 106:	95 b5       	in	r25, 0x25	; 37
+ 108:	80 81       	ld	r24, Z
+ 10a:	84 70       	andi	r24, 0x04	; 4
+ 10c:	88 0f       	add	r24, r24
+ 10e:	89 2b       	or	r24, r25
+ 110:	85 bd       	out	0x25, r24	; 37
+		
+	// Select clock mode
+	TCCR0B |= tim0InitStructure->clockSelectMode;
+ 112:	95 b5       	in	r25, 0x25	; 37
+ 114:	83 81       	ldd	r24, Z+3	; 0x03
+ 116:	89 2b       	or	r24, r25
+ 118:	85 bd       	out	0x25, r24	; 37
+		
+	// Set output compare registers
+	OCR0A = tim0InitStructure->outputCompareRegA;
+ 11a:	84 81       	ldd	r24, Z+4	; 0x04
+ 11c:	87 bd       	out	0x27, r24	; 39
+	OCR0B = tim0InitStructure->outputCompareRegB;
+ 11e:	85 81       	ldd	r24, Z+5	; 0x05
+ 120:	88 bd       	out	0x28, r24	; 40
+ 122:	08 95       	ret
 
-000000e0 <main>:
-#define F_CPU 16000000UL
+00000124 <main>:
+ *************************************************************************************/
 
-#include <util/delay.h>
 #include "lib/sys/io_ports.h"
+#include "lib/sys/tim_0_8_pwm.h"
 
 int main(void) {
-  e0:	cf 93       	push	r28
-  e2:	df 93       	push	r29
-  e4:	00 d0       	rcall	.+0      	; 0xe6 <main+0x6>
-  e6:	00 d0       	rcall	.+0      	; 0xe8 <main+0x8>
-  e8:	cd b7       	in	r28, 0x3d	; 61
-  ea:	de b7       	in	r29, 0x3e	; 62
+ 124:	cf 93       	push	r28
+ 126:	df 93       	push	r29
+ 128:	cd b7       	in	r28, 0x3d	; 61
+ 12a:	de b7       	in	r29, 0x3e	; 62
+ 12c:	2a 97       	sbiw	r28, 0x0a	; 10
+ 12e:	0f b6       	in	r0, 0x3f	; 63
+ 130:	f8 94       	cli
+ 132:	de bf       	out	0x3e, r29	; 62
+ 134:	0f be       	out	0x3f, r0	; 63
+ 136:	cd bf       	out	0x3d, r28	; 61
 
-	ioInitStructure_t ioInitStructure = {
-  ec:	88 e0       	ldi	r24, 0x08	; 8
-  ee:	89 83       	std	Y+1, r24	; 0x01
-  f0:	81 e0       	ldi	r24, 0x01	; 1
-  f2:	8a 83       	std	Y+2, r24	; 0x02
-  f4:	88 e2       	ldi	r24, 0x28	; 40
-  f6:	90 e0       	ldi	r25, 0x00	; 0
-  f8:	9c 83       	std	Y+4, r25	; 0x04
-  fa:	8b 83       	std	Y+3, r24	; 0x03
+	io_initStructure_t ioInitStructure = {
+ 138:	88 e0       	ldi	r24, 0x08	; 8
+ 13a:	89 83       	std	Y+1, r24	; 0x01
+ 13c:	81 e0       	ldi	r24, 0x01	; 1
+ 13e:	8a 83       	std	Y+2, r24	; 0x02
+ 140:	88 e2       	ldi	r24, 0x28	; 40
+ 142:	90 e0       	ldi	r25, 0x00	; 0
+ 144:	9c 83       	std	Y+4, r25	; 0x04
+ 146:	8b 83       	std	Y+3, r24	; 0x03
 		.pin	= IO_PIN_3,
 		.PORT	= &PORTC,
 		.mode	= IO_MODE_OUTPUT
 	}; IO_init(&ioInitStructure);
-  fc:	ce 01       	movw	r24, r28
-  fe:	01 96       	adiw	r24, 0x01	; 1
- 100:	0e 94 40 00 	call	0x80	; 0x80 <IO_init>
+ 148:	ce 01       	movw	r24, r28
+ 14a:	01 96       	adiw	r24, 0x01	; 1
+ 14c:	0e 94 40 00 	call	0x80	; 0x80 <IO_init>
+	
+	tim0_initStructure_t tim0InitStructure = {
+ 150:	ce 01       	movw	r24, r28
+ 152:	05 96       	adiw	r24, 0x05	; 5
+ 154:	26 e0       	ldi	r18, 0x06	; 6
+ 156:	fc 01       	movw	r30, r24
+ 158:	11 92       	st	Z+, r1
+ 15a:	2a 95       	dec	r18
+ 15c:	e9 f7       	brne	.-6      	; 0x158 <main+0x34>
+ 15e:	22 e0       	ldi	r18, 0x02	; 2
+ 160:	2d 83       	std	Y+5, r18	; 0x05
+ 162:	2e 83       	std	Y+6, r18	; 0x06
+ 164:	25 e0       	ldi	r18, 0x05	; 5
+ 166:	28 87       	std	Y+8, r18	; 0x08
+ 168:	2f ef       	ldi	r18, 0xFF	; 255
+ 16a:	29 87       	std	Y+9, r18	; 0x09
+		.clockSelectMode = TIM0_CS_CLK_DIV_1024,
+		.compareOutputModeA = TIM0_CO_CLEAR_ON_COMPARE_MATCH,
+		.waveformMode = TIM0_WF_CTC_OCR0A,
+		.outputCompareRegA = 0xFF
+	}; TIM0_init(&tim0InitStructure);
+ 16c:	0e 94 6b 00 	call	0xd6	; 0xd6 <TIM0_init>
 
-    while(TRUE) {
-		
-		IO_toggleBit(&PORTC, IO_PIN_3);
- 104:	68 e0       	ldi	r22, 0x08	; 8
- 106:	88 e2       	ldi	r24, 0x28	; 40
- 108:	90 e0       	ldi	r25, 0x00	; 0
- 10a:	0e 94 6a 00 	call	0xd4	; 0xd4 <IO_toggleBit>
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
+    while(TRUE);
+ 170:	ff cf       	rjmp	.-2      	; 0x170 <main+0x4c>
 
-	__builtin_avr_delay_cycles(__ticks_dc);
- 10e:	2f ef       	ldi	r18, 0xFF	; 255
- 110:	83 ed       	ldi	r24, 0xD3	; 211
- 112:	90 e3       	ldi	r25, 0x30	; 48
- 114:	21 50       	subi	r18, 0x01	; 1
- 116:	80 40       	sbci	r24, 0x00	; 0
- 118:	90 40       	sbci	r25, 0x00	; 0
- 11a:	e1 f7       	brne	.-8      	; 0x114 <main+0x34>
- 11c:	00 c0       	rjmp	.+0      	; 0x11e <main+0x3e>
- 11e:	00 00       	nop
- 120:	f1 cf       	rjmp	.-30     	; 0x104 <main+0x24>
+00000172 <_exit>:
+ 172:	f8 94       	cli
 
-00000122 <_exit>:
- 122:	f8 94       	cli
-
-00000124 <__stop_program>:
- 124:	ff cf       	rjmp	.-2      	; 0x124 <__stop_program>
+00000174 <__stop_program>:
+ 174:	ff cf       	rjmp	.-2      	; 0x174 <__stop_program>

@@ -27,14 +27,20 @@
  *************************************************************************************/
 /** @brief	Boolean data type. */
 typedef _Bool bool_t;
+/** @brief	I/O-register data type. */
+typedef volatile uint8_t register8_t;
+/** @brief	Output compare value data type 8 bit. */
+typedef uint8_t	outputCompare8_t;
+/** @brief	Output compare value data type 16 bit. */
+typedef uint16_t outputCompare16_t;
 
 /**************************************************************************************
  * ENUMS
  *************************************************************************************/
 /** @brief	Boolean true and false. */
 enum {
-	FALSE =	(bool_t)	0,
-	TRUE =	(bool_t)	1	
+	FALSE	= 0,
+	TRUE	= 1	
 };
 
 #endif /* SYSTEM_H */

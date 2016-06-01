@@ -40,6 +40,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../lib/sys/io_ports.c \
+../lib/sys/tim_0_8_pwm.c \
 ../main.c
 
 
@@ -51,18 +52,22 @@ ASM_SRCS +=
 
 OBJS +=  \
 lib/sys/io_ports.o \
+lib/sys/tim_0_8_pwm.o \
 main.o
 
 OBJS_AS_ARGS +=  \
 lib/sys/io_ports.o \
+lib/sys/tim_0_8_pwm.o \
 main.o
 
 C_DEPS +=  \
 lib/sys/io_ports.d \
+lib/sys/tim_0_8_pwm.d \
 main.d
 
 C_DEPS_AS_ARGS +=  \
 lib/sys/io_ports.d \
+lib/sys/tim_0_8_pwm.d \
 main.d
 
 OUTPUT_FILE_PATH +=atmega48a-48pa-88a-88pa-168a-168pa-328-328p.elf
@@ -79,6 +84,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

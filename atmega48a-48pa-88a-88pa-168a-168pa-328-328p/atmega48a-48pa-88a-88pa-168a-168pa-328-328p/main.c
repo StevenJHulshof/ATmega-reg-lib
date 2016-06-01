@@ -10,23 +10,24 @@
  *   
  *************************************************************************************/
 
-#define F_CPU 16000000UL
-
-#include <util/delay.h>
 #include "lib/sys/io_ports.h"
+#include "lib/sys/tim_0_8_pwm.h"
 
 int main(void) {
 
-	ioInitStructure_t ioInitStructure = {
+	io_initStructure_t ioInitStructure = {
 		.pin	= IO_PIN_3,
 		.PORT	= &PORTC,
 		.mode	= IO_MODE_OUTPUT
 	}; IO_init(&ioInitStructure);
+	
+	tim0_initStructure_t tim0InitStructure = {
+		.clockSelectMode = TIM0_CS_CLK_DIV_1024,
+		.compareOutputModeA = TIM0_CO_CLEAR_ON_COMPARE_MATCH,
+		.waveformMode = TIM0_WF_CTC_OCR0A,
+		.outputCompareRegA = 0xFF
+	}; TIM0_init(&tim0InitStructure);
 
-    while(TRUE) {
-		
-		IO_toggleBit(&PORTC, IO_PIN_3);
-		_delay_ms(1000);
-	}
+    while(TRUE);
 }
 

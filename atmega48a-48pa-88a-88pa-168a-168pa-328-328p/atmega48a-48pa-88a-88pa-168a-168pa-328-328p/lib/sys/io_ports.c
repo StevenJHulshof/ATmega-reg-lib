@@ -22,10 +22,10 @@
 /**************************************************************************************
  * FUNCTION
  *************************************************************************************/
-void IO_init(ioInitStructure_t *ioInitStructure) {
+void IO_init(io_initStructure_t *ioInitStructure) {
 	
 	// Locate DDR register.
-	ioRegister8_t *DDR = ioInitStructure->PORT-1;
+	register8_t *DDR = ioInitStructure->PORT-1;
 		
 	// Reset bit values.
 	*DDR &= ~ioInitStructure->pin;
@@ -41,31 +41,31 @@ void IO_init(ioInitStructure_t *ioInitStructure) {
 								((~ioInitStructure->mode) & 0x01);
 }
 
-void IO_setBit(ioRegister8_t *PORT, ioPin8_t pin) {
+void IO_setBit(register8_t *PORT, io_pin8_t pin) {
 	
 	// Set bit.
 	*PORT |= pin;
 }
 
-void IO_resetBit(ioRegister8_t *PORT, ioPin8_t pin) {
+void IO_resetBit(register8_t *PORT, io_pin8_t pin) {
 	
 	// Reset bit.
 	*PORT &= ~pin;
 }
 
-void IO_toggleBit(ioRegister8_t *PORT, ioPin8_t pin) {
+void IO_toggleBit(register8_t *PORT, io_pin8_t pin) {
 	
 	// Locate PIN register.
-	ioRegister8_t *PIN = PORT-2;
+	register8_t *PIN = PORT-2;
 	
 	// Toggle bit.
 	*PIN |= pin;
 }
 
-bool_t IO_readBit(ioRegister8_t *PORT, ioPin8_t pin) {
+bool_t IO_readBit(register8_t *PORT, io_pin8_t pin) {
 	
 	// Locate PIN register.
-	ioRegister8_t *PIN = PORT-2;
+	register8_t *PIN = PORT-2;
 	
 	// Read bit value.
 	bool_t bitValue = (bool_t) (*PIN >> (uint8_t)(log10(pin)/log10(2))) & 0x01;

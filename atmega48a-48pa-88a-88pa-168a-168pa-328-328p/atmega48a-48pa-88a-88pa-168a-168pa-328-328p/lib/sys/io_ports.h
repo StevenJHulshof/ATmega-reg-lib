@@ -49,6 +49,7 @@
  *	}
  * }	 
  * @endcode  
+ *
  *************************************************************************************/
 
 #ifndef IO_PORTS_H_
@@ -60,20 +61,10 @@
 #include "system.h"
 
 /**************************************************************************************
- * TYPEDEFS
- *************************************************************************************/
-/** @brief	I/O-pin data type. */
-typedef uint8_t	ioPin8_t;
-/** @brief	I/O-mode data type. */
-typedef uint8_t	ioMode8_t;
-/** @brief	I/O-register data type. */
-typedef volatile uint8_t ioRegister8_t;
-
-/**************************************************************************************
- * ENUMS
+ * TYPEDEF ENUMS
  *************************************************************************************/
 /** @brief	I/O-port pins. */
-enum {
+typedef enum {
 	IO_PIN_0 = 0x01,	
 	IO_PIN_1 = 0x02,
 	IO_PIN_2 = 0x04,
@@ -82,14 +73,14 @@ enum {
 	IO_PIN_5 = 0x20,
 	IO_PIN_6 = 0x40,
 	IO_PIN_7 = 0x80,
-};
+} io_pin8_t;
 
 /** @brief	I/O-pin modes. */
-enum {
+typedef enum {
 	IO_MODE_INPUT	= 0x00,
 	IO_MODE_OUTPUT	= 0x01,
 	IO_MODE_HI_Z	= 0x02
-};
+} io_mode8_t;
 
 /**************************************************************************************
  * DATA STRUCTURES
@@ -97,12 +88,13 @@ enum {
 /** @brief	I/O initialization structure */
 typedef struct {
 	/** @brief	I/O-pin number. */
-	ioPin8_t	pin;
+	io_pin8_t pin;
 	/** @brief	I/O-pin mode. */
-	ioMode8_t mode;
+	io_mode8_t mode;
 	/** @brief	Pointer to the I/O-PORT register. */
-	ioRegister8_t *PORT;	
-} ioInitStructure_t;
+	register8_t *PORT;	
+	
+} io_initStructure_t;
 
 /**************************************************************************************
  * FUNCTION PROTOTYPES
@@ -114,7 +106,7 @@ typedef struct {
  *
  * @param	ioInitStructure	Pointer to I/O-ports initialization structure.
  */
-void IO_init(ioInitStructure_t *ioInitStructure);
+void IO_init(io_initStructure_t *ioInitStructure);
 
 /**
  * @brief	Set I/O-pin high.
@@ -124,7 +116,7 @@ void IO_init(ioInitStructure_t *ioInitStructure);
  * @param	PORT	Pointer to the I/O-PORT register.
  * @param	pin		I/O-pin number.
  */
-void IO_setBit(ioRegister8_t *PORT, ioPin8_t pin);
+void IO_setBit(register8_t *PORT, io_pin8_t pin);
 
 /**
  * @brief	Set I/O-pin low.
@@ -134,7 +126,7 @@ void IO_setBit(ioRegister8_t *PORT, ioPin8_t pin);
  * @param	PORT	Pointer to the I/O-PORT register.
  * @param	pin		I/O-pin number.
  */
-void IO_resetBit(ioRegister8_t *PORT, ioPin8_t pin);
+void IO_resetBit(register8_t *PORT, io_pin8_t pin);
 
 /**
  * @brief	Toggle I/O-pin.
@@ -144,7 +136,7 @@ void IO_resetBit(ioRegister8_t *PORT, ioPin8_t pin);
  * @param	PORT	Pointer to the I/O-PORT register.
  * @param	pin		I/O-pin number.
  */
-void IO_toggleBit(ioRegister8_t *PORT, ioPin8_t pin);
+void IO_toggleBit(register8_t *PORT, io_pin8_t pin);
 
 /**
  * @brief	Read I/O-pin.
@@ -156,7 +148,7 @@ void IO_toggleBit(ioRegister8_t *PORT, ioPin8_t pin);
  *
  * @return	State of the I/O-pin.
  */
-bool_t IO_readBit(ioRegister8_t *PORT, ioPin8_t pin);
+bool_t IO_readBit(register8_t *PORT, io_pin8_t pin);
 
 #endif /* IO_PORTS_H_ */
 /* EOF: io_ports.h */

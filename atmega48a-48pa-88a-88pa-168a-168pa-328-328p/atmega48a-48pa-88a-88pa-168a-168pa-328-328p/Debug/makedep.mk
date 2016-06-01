@@ -4,5 +4,7 @@
 
 lib\sys\io_ports.c
 
+lib\sys\tim_0_8_pwm.c
+
 main.c
 
